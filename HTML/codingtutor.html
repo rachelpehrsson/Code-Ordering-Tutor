@@ -1,0 +1,81 @@
+<html lang="en-US">
+  <head>
+    <title>Tutor</title>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.ctat.cs.cmu.edu/releases/beta/CTAT.css">
+
+    <script src="https://cdn.ctat.cs.cmu.edu/releases/beta/jquery.min.js"></script>
+    <script src="https://cdn.ctat.cs.cmu.edu/releases/beta/ctat.min.js"></script>
+    <script src="https://cdn.ctat.cs.cmu.edu/releases/beta/ctatloader.js"></script>
+    <script src="https://cdn.ctat.cs.cmu.edu/releases/current/nools.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="Assets/codingtutor.css">
+    
+  </head>
+
+  <body>
+    <main class="CTATTutor">
+      <!--style ="text-align: center;"-->
+      <div id ="level-intro" class="container" style = "display:none">
+        <div class = "row justify-content-center">
+          <h2>What level python coder are you?</h2>
+        </div>
+        <div class ="row justify-content-center">
+          <button id = "beginner" onClick = "enterTutor()" type="button" class="btn btn-primary level-button easy">Beginner</button>
+          <button id = "intermediate" onClick = "enterTutor()" type="button" class="btn btn-primary level-button medium">Intermediate</button>
+          <button id = "medium" onClick = "enterTutor()" type="button" class="btn btn-primary level-button hard">Advanced</button>
+        </div>
+      </div>
+        <!--style = "display:none"-->
+      <div id = "main" class ="container" >
+        <div class = "row">
+          <div class="col">
+         <div class = "row CTATProblem">
+          <h4 id = "question-text" class="CTATTextField">*question text*</h4>
+        </div>
+        <div class = "row justify-content-start CTATSolution">
+          <row id ="code">
+            <!--<textarea class="CTATTextInput" id="code-input" name="code-input" rows="6" cols="50">
+            </textarea>-->
+            Source:
+                <div id="source" class="CTATDragNDrop" data-ctat-tutor="false" name="DragNDropGroup">
+                  <span id="dnd1" class="drag-span unselectable"><div class = "drag"><!--lstnum, lstnum1 = zip(*sorted(zip(lstnum, lstnum1)))--></div></span>
+                  <span id="dnd2" class="drag-span unselectable"><div class = "drag"><!--print(lstnum, lstnum1)--></div></span>
+                  <span id="dnd3" class="drag-span unselectable"><div class = "drag"><!--lstnum = [ 5,2, 1, 7,26]--></div></span>
+                  <span id="dnd4" class="drag-span unselectable"><div class = "drag"><!--lstnum1 = [45,35, 78, 80, 100]--></div></span>
+                  <span id="dnd5" class="drag-span unselectable"><div class = "drag"></div></span>
+                </div>
+              <div id = "sinks" style ="margin-top: 20px;">
+               <div id="sink1" class="CTATDragNDrop sink" name="DragNDropGroup" data-ctat-max-cardinality="1" data-ctat-tutor="true"></div>
+               <div id="sink2" class="CTATDragNDrop sink" name="DragNDropGroup" data-ctat-max-cardinality="1" data-ctat-tutor="true"></div>
+               <div id="sink3" class="CTATDragNDrop sink" name="DragNDropGroup" data-ctat-max-cardinality="1" data-ctat-tutor="true"></div>
+               <div id="sink4" class="CTATDragNDrop sink" name="DragNDropGroup" data-ctat-max-cardinality="1" data-ctat-tutor="true"></div>
+               <div id="sink5" class="CTATDragNDrop sink" name="DragNDropGroup" data-ctat-max-cardinality="1" data-ctat-tutor="true"></div>
+               <!-- <div id="submit" class="CTATSubmitButton" data-ctat-target="sink">Submit</div>-->
+               
+            </div>
+            <div style = "margin-top:10px" id="submit-code" class= "CTATButton" data-ctat-disable-on-correct="false">Submit</div>
+          </row>
+          <row>
+            <h4 id="output"></h4>
+          </row>
+        </div>
+        </div>
+      <div class="col">
+    <div id = "feedback" class ="container">
+      <div class="row">
+        <div style ="display: inline-block; padding:0px 10px">
+        <div id="done" class="CTATDoneButton"></div>
+        <div id="hint" class="CTATHintButton"></div>
+      </div>
+          <div id="hintWindow" class="CTATHintWindow"></div>
+      </div>
+    </div>
+  </div>
+    </div>
+      </div>
+    </main>
+  </body>
+  </html>

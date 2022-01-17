@@ -1,0 +1,82 @@
+.level-button{
+	max-width: 250px;
+	height: 50px;
+	margin: 0px 5px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+h2{
+	padding: 20px 0px;
+}
+
+.easy, #submit-code button{
+	background-color: #79D72F;
+	border-color: #79D72F;
+	color: white;
+	font-weight: bold;
+	padding: 10px;
+	border: none;
+	border-radius: 7px;
+}
+
+.easy:hover,#submit-code button:hover{
+	background-color: #6ABE28;
+	border-color: #6ABE28;
+	cursor: pointer;
+}
+
+.CTAT-button.CTAT--correct{
+	box-shadow: none;
+	border: none;
+}
+
+.medium{
+	background-color: #E8D427;
+	border-color: #E8D427;
+}
+
+.medium:hover{
+	background-color: #E2CD09;
+	border-color: #E2CD09;
+}
+
+.hard{
+	background-color: #E82727;
+	border-color: #E82727;
+}
+
+.hard:hover{
+	background-color: #D01919;
+	border-color: #D01919;
+}
+
+.sink{
+	height: fit-content;
+    min-height: 30px;
+}
+
+.CTATDragNDrop {
+ width: 100%;
+}
+
+#source{
+	min-height: 100px;
+	height: fit-content;
+}
+
+.CTATDragNDrop span{
+	display: block;
+	margin: 5px 0px;
+}
+
+.drag{
+	background-color: #bafa88;
+	padding: 0px 5px;
+	border-radius: 5px;
+	width: fit-content;
+}
+
+.CTATProblem, .CTATSolution{
+	border: none;
+}
