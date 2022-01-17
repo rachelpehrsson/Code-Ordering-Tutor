@@ -1,0 +1,221 @@
+/*******START WORKING MEMORY********/
+import("types.nools");
+//goals:
+//enterCode
+//submitEnabled
+//solutionFound
+rule bootstrap {
+	when {
+		b: Boolean b === true from true;
+	}
+	then {
+
+		assert(new TPA("question-text", "UpdateTextArea", probtext));
+
+		var codeMap = [];
+		
+		for(let c = 1;c <=codePlacementArrays.length; c++){
+			var cp = codePlacementArrays[c-1];
+			var replacedCode = cp.code.replace("*equals*", "=");
+			codeMap[cp.name] = replacedCode;
+			assert(new CodePlacements("cp"+c, cp.name, replacedCode, cp.acceptableLines));
+		}
+
+		var drags = document.getElementsByClassName("drag-span");
+		var dragsArray = [];
+		
+		for (let x = 0; x < drags.length; x++){
+			var drag = drags[x];
+			if(drag != null){
+				if(x>(codePlacementArrays.length-1)){
+					drag.style.display = "none";
+					assert(new interfaceElement(drag.id, null, false));
+				}
+				else{
+					drag.innerHTML = "<div class = 'drag'>"+codeMap[drag.id]+"</div>";
+					assert(new interfaceElement(drag.id, codeMap[drag.id], true));
+					dragsArray.push(drag.id);
+				}
+			}
+		}
+
+		var sinks = document.getElementsByClassName("sink");
+		var sinksArray = [];
+		
+		for (let x = 0; x < sinks.length; x++){
+			var sink = sinks[x];
+			if(sink != null){
+				if(x>(codePlacementArrays.length-1)){
+					sink.style.display = "none";
+					assert(new interfaceElement(sink.id, null, false));
+				}
+				else{
+					assert(new interfaceElement(sink.id, null, true));
+					sinksArray.push(sink.id);
+				}
+			}
+		}
+
+		
+		
+		assert(new interfaceElement("code-input", null, true));
+
+		assert(new Problem(probname, output, sinksArray, dragsArray, "submit-code"));
+
+
+		setProblemAttribute("use_backtracking", true);
+		setProblemAttribute("use_hint_fact", true);
+		console.log("end bootstrap");
+		halt();
+	}
+}
+
+
+//--------------------------------------------------------------------------------------------
+//
+// Rules for enterCode subgoal
+//
+//--------------------------------------------------------------------------------------------
+rule setHints {
+	when{
+		p: Problem p.subgoal == "enterCode" {ieDropElements:draggers};
+		cp: CodePlacements cp.dragName in draggers {code:code,acceptableLines:placements};
+		ie:interfaceElement ie.name in placements && ie.value == null {name: sink};
+	}
+	then{
+		assert(new Hint("What objects need to be instantiated before they can be used?"));
+        assert(new Hint("You can only use an object in a function after it has been instantiated."));
+        assert(new Hint("Place '"+code+"' in "+sink.replace("sink", "line ")));
+	}
+}
+
+rule checkCode {
+	when{
+		p: Problem p.subgoal == "enterCode" {ieCodeInputs: inputs};
+		sv: StudentValues sv.action == "Add" {selection:sel, input:inputElement};
+		ieInput:interfaceElement ieInput.name == sel && ieInput.value == null;
+		ieDrag:interfaceElement ieDrag.name == inputElement {value:code};
+		cp: CodePlacements cp.dragName == inputElement {acceptableLines:placements};
+	}
+	then{
+		//check if code input is acceptable for code placement
+		console.log("entered then");
+
+		var predictedSAI = {selection: sel, action: "Add", input: code};
+		if (checkSAI(predictedSAI,function() {return (placements.includes(sel));}))    {
+			modify(ieInput, "value", ieDrag.value);
+			var sinks = document.getElementsByClassName("sink");
+			halt();
+		}
+		else{
+			
+			backtrack();
+		}
+
+	}
+
+}
+
+//ERROR MESSAGE
+rule codeError{
+salience: -2;
+	when{
+		p: Problem p.subgoal == "enterCode" {ieCodeInputs: inputs};
+		sv: StudentValues sv.action == "Add" {selection:sel, input:inputElement};
+		ieInput:interfaceElement ieInput.name == sel && ieInput.value == null;
+		ieDrag:interfaceElement ieDrag.name == inputElement {value:code};
+		cp: CodePlacements cp.dragName == inputElement {acceptableLines:placements};
+	}
+	then{
+		//check if code input is acceptable for code placement
+		console.log("entered then");
+		var predictedSAI = {selection: sel, action: "Add", input: code};
+		if (checkSAI(predictedSAI,function() {return (!placements.includes(sel));}, true))    {
+			var errorMessage = "";
+			for(let p = 0; p<placements.length;p++){
+				var placement = placements[p];
+				if(inputs.indexOf(placement)<inputs.indexOf(sel)){
+					errorMessage = "Looks like that line needs other code to run before it can. Are there any variables that need to be instantiated first?"
+				}
+				else{
+					errorMessage = "Looks like that code needs to run before other lines can run. Does it create any elements that are used in other pieces?"
+				}
+			}
+			setSuccessOrBugMsg(errorMessage);
+		}
+		backtrack();
+
+	}
+
+}
+
+//Add submit rule
+rule Submit {
+	when{
+		p: Problem p.subgoal == "enterCode" {output: op, ieCodeInputs: inputs};
+		ie1:interfaceElement ie1.name == inputs[0] && ie1.value != null;
+		ie2:interfaceElement ie2.name == inputs[1]  && ie2.value != null;
+		ie3:interfaceElement ie3.name == inputs[2]  && ie3.value != null;
+		ie4:interfaceElement ie4.active == false || (ie4.name == inputs[3] && ie4.value != null);
+		ie5:interfaceElement (ie5.active == false && ie5.name != ie4.name)|| (ie4.name == inputs[3] && ie4.value != null);
+	}
+	then{
+		let predictedSAI = {
+            selection: "submit-code",
+            action: "ButtonPressed",
+            input: "don't_care"
+        };
+        if(checkSAI(predictedSAI)){
+			document.getElementById("output").innerText = op;
+			modify(p, "subgoal", "codeSubmitted");
+			halt();
+		}
+	}
+}
+
+rule BuggySubmit{
+	salience: -2;
+	when{
+		p: Problem p.subgoal == "enterCode" {output: op, ieCodeInputs: inputs};
+		ie: interfaceElement ie.name in inputs && ie.value == null;
+	}
+	then{
+			let predictedSAI = {
+            selection: "submit-code",
+            action: "ButtonPressed",
+            input: "don't_care"
+        };
+          if(checkSAI(predictedSAI), true){
+			setSuccessOrBugMsg("Your code isn't ready to submit yet!");
+		}
+		backtrack();
+	}
+}
+
+
+
+//--------------------------------------------------------------------------------------------
+//
+// Done rule
+//
+//--------------------------------------------------------------------------------------------
+
+rule Done {
+	when{
+		p: Problem p.subgoal == "codeSubmitted" {ieCodeInputs: inputs};
+	}
+	then{
+		let predictedSAI = {
+            selection: "done",
+            action: "ButtonPressed",
+            input: "don't_care"
+        };
+        if(checkSAI(predictedSAI)){
+            modify(p, "done", true);
+            setSuccessOrBugMsg("Congratulations! You have found a solution. There may be other possible solutions, however.");
+            halt();
+        } else{
+            backtrack();
+        }
+	}
+}

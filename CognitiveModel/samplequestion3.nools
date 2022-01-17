@@ -1,0 +1,19 @@
+import("productionrules.nools");
+
+global probname = "sortquestion3";
+global probtext = "How to get the square of each list element between two range";
+
+global output = "[9, 16, 25, 36, 49, 64]";
+
+/*listnum = list(range(3,9))
+ 
+list_item_square = [ele ** 2 for ele in listnum]
+         
+print(list_item_square)
+
+*/
+
+global codePlacementArrays = [{name:"dnd2", code: "listnum *equals* list(range(3,9))", acceptableLines: ["sink1"]}, 
+							{name: "dnd1", code: "listitemsquare *equals* [ele ** 2 for ele in listnum]",acceptableLines: ["sink2"]},
+							{name: "dnd3",code:"print(listitemsquare)", acceptableLines: ["sink3"]}
+							];

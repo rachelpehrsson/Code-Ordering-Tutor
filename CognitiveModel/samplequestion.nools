@@ -1,0 +1,12 @@
+import("productionrules.nools");
+
+global probname = "sortquestion";
+global probtext = "How to sort two lists simultaneously";
+
+global output = "(1, 2, 5, 7, 26) (78, 35, 45, 80, 100)";
+
+global codePlacementArrays = [{name:"dnd3", code: "lstnum *equals* [ 5,2, 1, 7,26]", acceptableLines: ["sink1", "sink2"]}, 
+							{name: "dnd4", code: "lstnum1 *equals* [45,35, 78, 80, 100]", acceptableLines: ["sink1", "sink2"]},
+							{name: "dnd1", code: "lstnum, lstnum1 *equals* zip(*sorted(zip(lstnum, lstnum1))",acceptableLines: ["sink3"]},
+							{name: "dnd2",code:"print lstnum,lstnum1)", acceptableLines: ["sink4"]}
+							];

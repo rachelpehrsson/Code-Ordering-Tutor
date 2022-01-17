@@ -1,0 +1,20 @@
+import("productionrules.nools");
+
+global probname = "sortquestion2";
+global probtext = "How to Intersect two list";
+
+global output = "intersect of two list equals ['C++', 6, 7, 5, 'C#']";
+
+/*listnum = ['C++',2,3,6,7,5,'C#']
+listnum1 = ['C++',5,6,7,'C#']
+ 
+intersect_res = [item for item in listnum if item in listnum1]
+ 
+print('intersect of two list =',intersect_res)
+*/
+
+global codePlacementArrays = [{name:"dnd2", code: "listnum *equals* ['C++',2,3,6,7,5,'C#']", acceptableLines: ["sink1", "sink2"]}, 
+							{name: "dnd1", code: "listnum1 *equals* ['C++',5,6,7,'C#']", acceptableLines: ["sink1", "sink2"]},
+							{name: "dnd4", code: "intersect_res *equals* [item for item in listnum if item in listnum1]",acceptableLines: ["sink3"]},
+							{name: "dnd3",code:"print('intersect of two list equals',intersect_res)", acceptableLines: ["sink4"]}
+							];

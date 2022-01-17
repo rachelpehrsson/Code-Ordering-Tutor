@@ -1,0 +1,23 @@
+import("productionrules.nools");
+
+global probname = "sortquestion4";
+global probtext = "How to Multiply all the elements of list";
+
+global output = "multiplication of list items  :  1440";
+
+/*lstnum = [6, 2, 3, 1, 10, 4]
+mutiply =1;
+for ele in lstnum:
+  mutiply =  mutiply* ele
+ 
+print ("multiplication of list items  : " ,mutiply)
+
+
+*/
+
+global codePlacementArrays = [{name:"dnd2", code: "listnum *equals* [6, 2, 3, 1, 10, 4]", acceptableLines: ["sink1", "sink2"]}, 
+							{name: "dnd1", code: "mutiply *equals*1",acceptableLines: ["sink1", "sink2"]},
+							{name: "dnd3",code:"for ele in lstnum:", acceptableLines: ["sink3"]},
+							{name: "dnd5", code: "mutiply *equals*  mutiply* ele",acceptableLines: ["sink4"]},
+							{name: "dnd4",code:"print ('multiplication of list items  : ' ,mutiply)", acceptableLines: ["sink5"]}
+							];

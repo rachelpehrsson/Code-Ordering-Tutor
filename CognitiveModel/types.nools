@@ -1,0 +1,78 @@
+
+define Problem {
+	name: null,
+	subgoal: null,
+	difficultyLevel: null,
+	output: null,
+	ieCodeInputs: [],
+	ieDropElements: [],
+	ieSubmit:null,
+	constructor: function(n, output, ieCodeInputs, ieDropElements, ieSubmit) {
+		this.name = n;
+		this.subgoal = "enterCode";
+		this.output = output;
+		this.ieCodeInputs = ieCodeInputs;
+		this.ieDropElements = ieDropElements;
+		ieSubmit = ieSubmit;
+	}
+}
+
+define CodePlacements {
+	name: null,
+	dragName: null, 
+	code:null,
+	acceptableLines: [],
+	constructor: function(name, dragName, code, acceptableLines) {
+		this.name = name;
+		this.dragName = dragName;
+		this.code = code;
+		this.acceptableLines = acceptableLines;
+	}
+}
+
+define interfaceElement {
+	name: null,
+	value: null,
+	active:null,
+	constructor: function(n, v, a) {
+		this.name = n;
+		this.value = v;
+		this.active = a;
+	}
+}
+
+define StudentValues {
+	selection: null,
+	action: null,
+	input: null,
+	constructor: function(s, a, i) {
+		this.selection = s;
+		this.action = a;
+		this.input = i;
+	}
+}
+
+define TPA {
+	selection: null,
+	action: null,
+	input: null,
+	constructor: function(s, a, i) {
+		this.selection = s;
+		this.action = a;
+		this.input = i;
+	}
+}
+
+define Hint {
+	precedence: 0,
+	msg: "",
+	constructor: function(m, optPrecedence) {
+		this.msg = m;
+		this.precedence = optPrecedence || 0;
+	}
+}
+
+define IsHintMatch {
+       constructor: function() {
+       }
+}
